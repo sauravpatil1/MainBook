@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MoneyGiveActivity"></activity>
+        <activity android:name=".CreateContactActivity"></activity>
+        <activity android:name=".ShowAndUpdateActivity" />
+        <activity android:name=".MoneyGiveActivity" />
         <activity android:name=".MoneyTakeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
