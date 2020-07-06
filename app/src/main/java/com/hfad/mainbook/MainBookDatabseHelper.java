@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MainBookDatabseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "MainBook";
     private static final int DB_VERSION = 2;
-    private static SQLiteDatabase db =null;
+
     MainBookDatabseHelper(Context context){
         super(context,DB_NAME,null,DB_VERSION);
 
@@ -16,10 +16,9 @@ public class MainBookDatabseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         updateMyDatabase(db,0,DB_VERSION);
-        this.db = db;
     }
 
-    private static void insertContact(String name,String address,String phone,int money){
+    private static void insertContact(SQLiteDatabase db , String name,String address,String phone,int money){
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME",name);
         contentValues.put("ADDRESS",address);
@@ -40,16 +39,10 @@ public class MainBookDatabseHelper extends SQLiteOpenHelper {
                     "ADDRESS TEXT," +
                     "PHONE TEXT," +
                     "MONEY INTEGER);");
-            insertContact("MY","AT SHEVAGE BK BODWAD","9503740861",0);
+            insertContact(db,"MY","AT SHEVAGE BK BODWAD","9503740861",0);
         }
         if(oldVersion<2){
             // do this
         }
-    }
-
-    public void updateMoney(String name, int money){
-        ContentValues moneyValue =new ContentValues();
-        moneyValue.put("MONEY",money);
-        db.update("COSTUMER",moneyValue,"NAME = ?",new String[]{name});
     }
 }
