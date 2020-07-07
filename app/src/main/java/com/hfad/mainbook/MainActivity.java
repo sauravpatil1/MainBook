@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView)findViewById(R.id.contacts);
         SQLiteOpenHelper sqLiteDatabase = new MainBookDatabseHelper(this);
         try{
-            db = sqLiteDatabase.getWritableDatabase();
+            db = sqLiteDatabase.getReadableDatabase();
             cursor = db.query("MONEY",new String[]{"NAME"},null,null,null,null,null);
             SimpleCursorAdapter listAdapeter = new SimpleCursorAdapter(this,android.R.layout.simple_expandable_list_item_1,
                     cursor,
