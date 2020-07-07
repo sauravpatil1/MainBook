@@ -22,11 +22,10 @@
         />
     <EditText
         android:id="@+id/mobile_number"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Mobile number"
-        android:inputType="phone"
         />
     <Button
         android:id="@+id/buttonUpdate"

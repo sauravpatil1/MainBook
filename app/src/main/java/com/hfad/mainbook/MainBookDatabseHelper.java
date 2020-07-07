@@ -15,6 +15,7 @@ public class MainBookDatabseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         updateMyDatabase(db,0,DB_VERSION);
     }
 

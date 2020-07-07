@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:text="Update"
                 android:layout_gravity="center"
-                android:onClick="onClickUpdateData"
+                android:onClick="onClickGiveMoney"
                 />
         </LinearLayout>
         <LinearLayout
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="Update"
                 android:layout_gravity="center"
-                android:onClick="onClickUpdateData"
+                android:onClick="onClickTakeMoney"
                 />
         </LinearLayout>
     </LinearLayout>

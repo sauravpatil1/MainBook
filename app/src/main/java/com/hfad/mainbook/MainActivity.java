@@ -31,20 +31,26 @@ public class MainActivity extends AppCompatActivity {
                     cursor,
                     new String[]{"NAME"},
                     new int[]{android.R.id.text1},0);
+
+            listView.setAdapter(listAdapeter);
+
         }catch (SQLiteException e){
             Toast toast = Toast.makeText(this,"Database Unvailable",Toast.LENGTH_SHORT);
             toast.show();
         }
-    }
 
-    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(MainActivity.this,ShowAndUpdateActivity.class);
-            intent.putExtra(ShowAndUpdateActivity.EXTRA_MONEY_ID,(int)id);
-            startActivity(intent);
-        }
-    };
+        AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this,ShowAndUpdateActivity.class);
+                intent.putExtra(ShowAndUpdateActivity.EXTRA_MONEY_ID,(int)id);
+                startActivity(intent);
+            }
+        };
+
+        listView.setOnItemClickListener(itemClickListener);
+
+    }
 
     public void onClickTake(View view) {
         Intent intent = new Intent(this,MoneyTakeActivity.class);
@@ -59,5 +65,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClickCreateNew(View view) {
         Intent intent = new Intent(this,CreateContactActivity.class);
         startActivity(intent);
+    }
+    public void onDistroy(){
+        super.onDestroy();
+        cursor.close();
+        db.close();
     }
 }
