@@ -19,14 +19,14 @@ public class CreateContactActivity extends AppCompatActivity {
     }
 
     public void onClickUpdate(View view) {
-        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabseHelper(this);
-        EditText name = (EditText)findViewById(R.id.name);
+        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabaseHelper(this);
+        EditText name = (EditText)findViewById(R.id.entered_name);
         String nameText = name.getText().toString();
 
-        EditText address =(EditText)findViewById(R.id.address);
+        EditText address =(EditText)findViewById(R.id.entered_address);
         String addressText = address.getText().toString();
 
-        EditText phone = (EditText)findViewById(R.id.mobile_number);
+        EditText phone = (EditText)findViewById(R.id.entered_mobile_number);
         String phoneText = phone.getText().toString();
         try{
             SQLiteDatabase db =  sqLiteOpenHelper.getWritableDatabase();
@@ -37,7 +37,6 @@ public class CreateContactActivity extends AppCompatActivity {
             toast.show();
         }
     }
-
     private static void insertContact(SQLiteDatabase db , String name,String address,String phone,int money){
         ContentValues contentValues = new ContentValues();
         contentValues.put("NAME",name);
@@ -46,4 +45,5 @@ public class CreateContactActivity extends AppCompatActivity {
         contentValues.put("MONEY",money);
         db.insert("COSTUMER",null,contentValues);
     }
+
 }

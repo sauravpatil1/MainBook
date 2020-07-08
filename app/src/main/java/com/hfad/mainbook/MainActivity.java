@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView listView = (ListView)findViewById(R.id.contacts);
-        SQLiteOpenHelper sqLiteDatabase = new MainBookDatabseHelper(this);
+        SQLiteOpenHelper sqLiteDatabase = new MainBookDatabaseHelper(MainActivity.this);
         try{
             db = sqLiteDatabase.getReadableDatabase();
-            cursor = db.query("MONEY",new String[]{"NAME"},null,null,null,null,null);
+            cursor = db.query("COSTUMER",new String[]{"NAME"},null,null,null,null,null);
             SimpleCursorAdapter listAdapeter = new SimpleCursorAdapter(this,android.R.layout.simple_expandable_list_item_1,
                     cursor,
                     new String[]{"NAME"},
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this,ShowAndUpdateActivity.class);
-                intent.putExtra(ShowAndUpdateActivity.EXTRA_MONEY_ID,(int)id);
+                intent.putExtra(ShowAndUpdateActivity.EXTRA_MONEY_ID,id);
                 startActivity(intent);
             }
         };
@@ -52,21 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClickTake(View view) {
-        Intent intent = new Intent(this,MoneyTakeActivity.class);
-        startActivity(intent);
-    }
-
-    public void onClickGive(View view) {
-        Intent intent = new Intent(this,MoneyGiveActivity.class);
-        startActivity(intent);
-    }
 
     public void onClickCreateNew(View view) {
         Intent intent = new Intent(this,CreateContactActivity.class);
         startActivity(intent);
     }
-    public void onDistroy(){
+    public void onDestroy(){
         super.onDestroy();
         cursor.close();
         db.close();

@@ -24,12 +24,12 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_and_update);
 
-        int moneyId = (Integer)getIntent().getExtras().get(EXTRA_MONEY_ID);
-        this.moneyId =moneyId;
-        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabseHelper(this);
+        moneyId = (Integer)getIntent().getExtras().get(EXTRA_MONEY_ID);
+
+        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabaseHelper(ShowAndUpdateActivity.this);
         try{
             db = sqLiteOpenHelper.getWritableDatabase();
-            Cursor cursor = db.query("MONEY",new String[]{"NAME","ADDRESS","PHONE","MONEY"},"_id = ?",new String[]{Integer.toString(moneyId)},null,null,null);
+            Cursor cursor = db.query("COSTUMER",new String[]{"NAME","ADDRESS","PHONE","MONEY"},"_id = ?",new String[]{Integer.toString(moneyId)},null,null,null);
             if(cursor.moveToFirst()){
                 String nameText = cursor.getString(0);
                 String addressText = cursor.getString(1);
@@ -56,25 +56,18 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickUpdateData() {
+    public void onClickUpdateMoney(View view) {
+        int money = Integer.parseInt(this.money);
+        EditText editText =(EditText)findViewById(R.id.amount);
+
+        int enteredAmount = Integer.parseInt(editText.getText().toString());
+        money=enteredAmount+money;
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("MONEY",money);
-        db.update("DRINK",contentValues,"_id",new String[]{String.valueOf(moneyId)});
-    }
+        db.update("COSTUMER",contentValues,"_id",new String[]{String.valueOf(moneyId)});
 
-    public void onClickGiveMoney(View view) {
-        int money = Integer.parseInt(this.money);
-        EditText editText = (EditText)findViewById(R.id.give_amount);
-        int enteredAmount = Integer.parseInt(editText.getText().toString());
-        this.money = Integer.toString(money+enteredAmount);
-        onClickUpdateData();
-    }
-
-    public void onClickTakeMoney(View view) {
-        int money = Integer.parseInt(this.money);
-        EditText editText = (EditText)findViewById(R.id.give_amount);
-        int enteredAmount = Integer.parseInt(editText.getText().toString());
-        this.money = Integer.toString(money+enteredAmount);
-        onClickUpdateData();
+        Toast toast = Toast.makeText(this,"Update Database",Toast.LENGTH_LONG);
+        toast.show();
     }
 }
