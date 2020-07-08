@@ -10,7 +10,7 @@
         android:id="@+id/create_costumer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AddCostumer"
+        android:text="@string/add_costumer"
         android:layout_margin="10dp"
         android:layout_gravity="center"
         android:onClick="onClickCreateNew"

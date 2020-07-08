@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainBookDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "MainBook";
+    private static final String DB_NAME = "mainbook";
     private static final int DB_VERSION = 2;
 
     MainBookDatabaseHelper(Context context){
@@ -15,7 +15,6 @@ public class MainBookDatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         updateMyDatabase(db,0,DB_VERSION);
     }
 
@@ -35,12 +34,14 @@ public class MainBookDatabaseHelper extends SQLiteOpenHelper {
 
     private void updateMyDatabase(SQLiteDatabase db,int oldVersion,int newVersion){
         if(oldVersion<1){
-            db.execSQL("CREATE TABLE COSTUMER (_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "NAME TEXT," +
-                    "ADDRESS TEXT," +
-                    "PHONE TEXT," +
-                    "MONEY INTEGER);");
+            db.execSQL("CREATE TABLE COSTUMER (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "NAME TEXT,"
+                    + "ADDRESS TEXT,"
+                    + "PHONE TEXT,"
+                    + "MONEY INTEGER);");
+
             insertContact(db,"MY","AT SHEVAGE BK BODWAD","9503740861",0);
+            insertContact(db,"saurav","In somewher","89045938",894);
         }
         if(oldVersion<2){
             // do this

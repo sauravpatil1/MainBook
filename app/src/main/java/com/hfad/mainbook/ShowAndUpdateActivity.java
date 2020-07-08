@@ -26,10 +26,14 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
 
         moneyId = (Integer)getIntent().getExtras().get(EXTRA_MONEY_ID);
 
-        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabaseHelper(ShowAndUpdateActivity.this);
+        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabaseHelper(this);
         try{
             db = sqLiteOpenHelper.getWritableDatabase();
-            Cursor cursor = db.query("COSTUMER",new String[]{"NAME","ADDRESS","PHONE","MONEY"},"_id = ?",new String[]{Integer.toString(moneyId)},null,null,null);
+            Cursor cursor = db.query("COSTUMER",
+                    new String[]{"NAME","ADDRESS","PHONE","MONEY"},
+                    "_id = ?",new String[]{Integer.toString(moneyId)},
+                    null,null,null);
+
             if(cursor.moveToFirst()){
                 String nameText = cursor.getString(0);
                 String addressText = cursor.getString(1);
@@ -49,6 +53,8 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
 
                 TextView phone = (TextView)findViewById(R.id.phone);
                 phone.setText(phoneText);
+
+                cursor.close();
             }
         }catch (SQLiteException e){
             Toast toast = Toast.makeText(this,"Database Unavialable",Toast.LENGTH_SHORT);
@@ -69,5 +75,9 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(this,"Update Database",Toast.LENGTH_LONG);
         toast.show();
+    }
+    public void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 }

@@ -22,15 +22,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ListView listView = (ListView)findViewById(R.id.contacts);
-        SQLiteOpenHelper sqLiteDatabase = new MainBookDatabaseHelper(MainActivity.this);
+
+        SQLiteOpenHelper sqLiteDatabase = new MainBookDatabaseHelper(this);
         try{
             db = sqLiteDatabase.getReadableDatabase();
-            cursor = db.query("COSTUMER",new String[]{"NAME"},null,null,null,null,null);
-            SimpleCursorAdapter listAdapeter = new SimpleCursorAdapter(this,android.R.layout.simple_expandable_list_item_1,
+
+            cursor = db.query("COSTUMER",
+                    new String[]{"_id","NAME"},
+                    null,null,null,null,null);
+
+            SimpleCursorAdapter listAdapeter = new SimpleCursorAdapter(this,
+                    android.R.layout.simple_list_item_1,
                     cursor,
                     new String[]{"NAME"},
-                    new int[]{android.R.id.text1},0);
+                    new int[]{android.R.id.text1},
+                    0);
 
             listView.setAdapter(listAdapeter);
 
@@ -41,9 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent,
+                                    View view,
+                                    int position,
+                                    long id) {
                 Intent intent = new Intent(MainActivity.this,ShowAndUpdateActivity.class);
-                intent.putExtra(ShowAndUpdateActivity.EXTRA_MONEY_ID,id);
+                intent.putExtra(ShowAndUpdateActivity.EXTRA_MONEY_ID,(int)id);
                 startActivity(intent);
             }
         };
@@ -57,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,CreateContactActivity.class);
         startActivity(intent);
     }
+
     public void onDestroy(){
         super.onDestroy();
         cursor.close();
