@@ -1,11 +1,7 @@
 <resources>
     <string name="app_name">Main Book</string>
     <string name="current_bal">Current Balance</string>
-    <string name="bal_to_show">0.00</string>
-    <string name="money_take_from">Take Money</string>
-    <string name="money_give_to">Give Money</string>
-    <string name="details">Name
-    Address
-    Phone
-    </string>
+    <string name="update">UPDATE</string>
+    <string name="add_costumer">ADD COSTUMER</string>
+    <string name="delete">DELETE</string>
 </resources>

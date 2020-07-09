@@ -1,6 +1,7 @@
 package com.hfad.mainbook;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -24,19 +25,23 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_and_update);
 
-        int moneyId = (Integer)getIntent().getExtras().get(EXTRA_MONEY_ID);
-        this.moneyId =moneyId;
-        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabseHelper(this);
+        moneyId = (Integer)getIntent().getExtras().get(EXTRA_MONEY_ID);
+
+        SQLiteOpenHelper sqLiteOpenHelper = new MainBookDatabaseHelper(this);
         try{
             db = sqLiteOpenHelper.getWritableDatabase();
-            Cursor cursor = db.query("MONEY",new String[]{"NAME","ADDRESS","PHONE","MONEY"},"_id = ?",new String[]{Integer.toString(moneyId)},null,null,null);
+            Cursor cursor = db.query("COSTUMER",
+                    new String[]{"NAME","ADDRESS","PHONE","MONEY"},
+                    "_id = ?",new String[]{Integer.toString(moneyId)},
+                    null,null,null);
+
             if(cursor.moveToFirst()){
                 String nameText = cursor.getString(0);
                 String addressText = cursor.getString(1);
                 String phoneText = cursor.getString(2);
                 String moneyText = cursor.getString(3);
 
-                money=moneyText;
+                money = String.valueOf(moneyText);
 
                 TextView currentAmount = (TextView) findViewById(R.id.current_amount);
                 currentAmount.setText(moneyText);
@@ -49,6 +54,8 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
 
                 TextView phone = (TextView)findViewById(R.id.phone);
                 phone.setText(phoneText);
+
+                cursor.close();
             }
         }catch (SQLiteException e){
             Toast toast = Toast.makeText(this,"Database Unavialable",Toast.LENGTH_SHORT);
@@ -56,25 +63,36 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickUpdateData() {
+    public void onClickUpdateMoney(View view) {
+        int money = Integer.parseInt(this.money);
+        EditText editText =(EditText)findViewById(R.id.amount);
+
+        String enteredAmount = String.valueOf(editText.getText());
+        int valueToAdd = Integer.parseInt(enteredAmount);
+        money=valueToAdd+money;
+
         ContentValues contentValues = new ContentValues();
         contentValues.put("MONEY",money);
-        db.update("DRINK",contentValues,"_id",new String[]{String.valueOf(moneyId)});
+        db.update("COSTUMER",contentValues,"_id = ?",new String[]{String.valueOf(moneyId)});
+
+        Toast toast = Toast.makeText(this,"Update Database",Toast.LENGTH_LONG);
+        toast.show();
+
+        callMain();
+
+    }
+    public void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 
-    public void onClickGiveMoney(View view) {
-        int money = Integer.parseInt(this.money);
-        EditText editText = (EditText)findViewById(R.id.give_amount);
-        int enteredAmount = Integer.parseInt(editText.getText().toString());
-        this.money = Integer.toString(money+enteredAmount);
-        onClickUpdateData();
+    public void callMain(){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
-    public void onClickTakeMoney(View view) {
-        int money = Integer.parseInt(this.money);
-        EditText editText = (EditText)findViewById(R.id.give_amount);
-        int enteredAmount = Integer.parseInt(editText.getText().toString());
-        this.money = Integer.toString(money+enteredAmount);
-        onClickUpdateData();
+    public void onClickDeleteContact(View view) {
+        db.delete("COSTUMER","_id = ?",new String[]{String.valueOf(moneyId)});
+        callMain();
     }
 }

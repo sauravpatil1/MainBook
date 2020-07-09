@@ -11,8 +11,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CreateContactActivity"></activity>
         <activity android:name=".ShowAndUpdateActivity" />
-        <activity android:name=".MoneyGiveActivity" />
-        <activity android:name=".MoneyTakeActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
