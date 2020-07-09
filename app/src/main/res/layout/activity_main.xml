@@ -15,6 +15,22 @@
         android:layout_gravity="center"
         android:onClick="onClickCreateNew"
         />
+    <Button
+        android:id="@+id/list_give_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/give"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:onClick="onClickTake"/>
+    <Button
+        android:id="@+id/list_take_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/take"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:onClick="onClickGive"/>
 
     <ListView
         android:id="@+id/contacts"

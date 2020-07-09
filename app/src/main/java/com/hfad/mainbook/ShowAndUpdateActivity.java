@@ -63,14 +63,30 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         }
     }
 
-    public void onClickUpdateMoney(View view) {
+    public void onClickDeleteContact(View view) {
+        db.delete("COSTUMER","_id = ?",new String[]{String.valueOf(moneyId)});
+        callMain();
+    }
+
+    public void onClickTakeMoney(View view) {
+        EditText editText = (EditText)findViewById(R.id.amount_take);
+        String stringMoney = editText.getText().toString();
+        int enteredMoney = Integer.parseInt(stringMoney);
         int money = Integer.parseInt(this.money);
-        EditText editText =(EditText)findViewById(R.id.amount);
+        int result = money+enteredMoney;
+        onClickUpdateMoney(result);
+    }
 
-        String enteredAmount = String.valueOf(editText.getText());
-        int valueToAdd = Integer.parseInt(enteredAmount);
-        money=valueToAdd+money;
+    public void onClickGiveMoney(View view) {
+        EditText editText = (EditText)findViewById(R.id.amount_give);
+        String stringMoney = editText.getText().toString();
+        int enteredMoney = Integer.parseInt(stringMoney);
+        int money = Integer.parseInt(this.money);
+        int result = money-enteredMoney;
+        onClickUpdateMoney(result);
+    }
 
+    public void onClickUpdateMoney(int money) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("MONEY",money);
         db.update("COSTUMER",contentValues,"_id = ?",new String[]{String.valueOf(moneyId)});
@@ -81,18 +97,15 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         callMain();
 
     }
-    public void onDestroy() {
-        super.onDestroy();
-        db.close();
-    }
 
     public void callMain(){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
-    public void onClickDeleteContact(View view) {
-        db.delete("COSTUMER","_id = ?",new String[]{String.valueOf(moneyId)});
-        callMain();
+    public void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
+
 }

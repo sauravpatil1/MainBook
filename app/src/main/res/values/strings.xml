@@ -4,4 +4,8 @@
     <string name="update">UPDATE</string>
     <string name="add_costumer">ADD COSTUMER</string>
     <string name="delete">DELETE</string>
+    <string name="take">TAKE LIST</string>
+    <string name="give">GIVE LIST</string>
+    <string name="take_money">TAKE</string>
+    <string name="give_money">GIVE</string>
 </resources>

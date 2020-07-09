@@ -69,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onClickTake(View view){
+        Intent intent = new Intent(this,MoneyTakeFrom.class);
+        startActivity(intent);
+    }
+
+    public void onClickGive(View view){
+        Intent intent =new Intent(this,MoneyGiveTo.class);
+        startActivity(intent);
+    }
+
     public void onDestroy(){
         super.onDestroy();
         cursor.close();
