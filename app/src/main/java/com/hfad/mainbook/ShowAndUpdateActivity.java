@@ -1,6 +1,7 @@
 package com.hfad.mainbook;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -40,7 +41,7 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
                 String phoneText = cursor.getString(2);
                 String moneyText = cursor.getString(3);
 
-                money=moneyText;
+                money = String.valueOf(moneyText);
 
                 TextView currentAmount = (TextView) findViewById(R.id.current_amount);
                 currentAmount.setText(moneyText);
@@ -66,18 +67,32 @@ public class ShowAndUpdateActivity extends AppCompatActivity {
         int money = Integer.parseInt(this.money);
         EditText editText =(EditText)findViewById(R.id.amount);
 
-        int enteredAmount = Integer.parseInt(editText.getText().toString());
-        money=enteredAmount+money;
+        String enteredAmount = String.valueOf(editText.getText());
+        int valueToAdd = Integer.parseInt(enteredAmount);
+        money=valueToAdd+money;
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("MONEY",money);
-        db.update("COSTUMER",contentValues,"_id",new String[]{String.valueOf(moneyId)});
+        db.update("COSTUMER",contentValues,"_id = ?",new String[]{String.valueOf(moneyId)});
 
         Toast toast = Toast.makeText(this,"Update Database",Toast.LENGTH_LONG);
         toast.show();
+
+        callMain();
+
     }
     public void onDestroy() {
         super.onDestroy();
         db.close();
+    }
+
+    public void callMain(){
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickDeleteContact(View view) {
+        db.delete("COSTUMER","_id = ?",new String[]{String.valueOf(moneyId)});
+        callMain();
     }
 }

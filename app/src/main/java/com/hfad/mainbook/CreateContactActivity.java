@@ -1,6 +1,7 @@
 package com.hfad.mainbook;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,11 +32,13 @@ public class CreateContactActivity extends AppCompatActivity {
         try{
             SQLiteDatabase db =  sqLiteOpenHelper.getWritableDatabase();
             insertContact(db,nameText,addressText,phoneText,0);
-
+            db.close();
         }catch (SQLiteException e){
             Toast toast = Toast.makeText(this,"Database Unavailable",Toast.LENGTH_SHORT);
             toast.show();
         }
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
     private static void insertContact(SQLiteDatabase db , String name,String address,String phone,int money){
         ContentValues contentValues = new ContentValues();

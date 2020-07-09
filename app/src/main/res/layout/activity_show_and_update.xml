@@ -57,4 +57,12 @@
         android:layout_margin="20dp"
         android:onClick="onClickUpdateMoney"
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:onClick="onClickDeleteContact"
+        />
 </LinearLayout>

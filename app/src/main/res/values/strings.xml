@@ -3,4 +3,5 @@
     <string name="current_bal">Current Balance</string>
     <string name="update">UPDATE</string>
     <string name="add_costumer">ADD COSTUMER</string>
+    <string name="delete">DELETE</string>
 </resources>
